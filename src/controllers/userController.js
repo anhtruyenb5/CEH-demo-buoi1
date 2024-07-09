@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt"
-import { middleware } from "../middleware/middleware.js";
+import { response } from "../config/response.js";
 import { createToken } from "../config/jwt.js";
 
 const prisma = new PrismaClient();
@@ -47,7 +47,7 @@ const signUp = async (req, res) => {
     })
 
     if (checkEmail) {
-        middleware.response(res, "", "Email đã tồn tại", 400);
+        response(res, "", "Email đã tồn tại", 400);
         return;
     }
     let hashPassword = bcrypt.hashSync(password, 10)
@@ -59,7 +59,7 @@ const signUp = async (req, res) => {
     await prisma.users.create({
         data: newData
     })
-    middleware.response(res, "", "Đăng ký thành công", 200);
+    response(res, "", "Đăng ký thành công", 200);
     console.log(res.body)
 }
 
@@ -75,17 +75,17 @@ const login = async (req, res) => {
             if (bcrypt.compareSync(password, checkEmail.pass_word)) {
                 let token = createToken({ userId: checkEmail.id })
                 req.session.user = { userId: checkEmail.id, email: checkEmail.email }
-                middleware.response(res, token, "Đăng nhập thành công", 200);
+                response(res, token, "Đăng nhập thành công", 200);
                 console.log(req.session.user)
             }
             else {
-                middleware.response(res, "", "Mật khẩu không đúng", 400);
+                response(res, "", "Mật khẩu không đúng", 400);
             }
         } else {
-            middleware.response(res, "", "Email không đúng", 400);
+            response(res, "", "Email không đúng", 400);
         }
     } catch (error) {
-        middleware.response(error, "", "Đã có lỗi xảy ra", 500);
+        response(error, "", "Đã có lỗi xảy ra", 500);
     }
 
 }

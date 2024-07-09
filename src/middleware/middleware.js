@@ -1,12 +1,7 @@
+import { decodeToken } from "../config/jwt.js";
+import { response } from "../config/response.js";
+
 export const middleware = {
-    response: (res, data, message, code) => {
-        res.status(code).json({
-            statusCode: code,
-            data: data,
-            message: message,
-            date: new Date()
-        })
-    },
     errorHandle: (err, req, res, next) => {
         const statusCode = err.status || 500;
 
@@ -20,23 +15,23 @@ export const middleware = {
     },
     checkLoginRequest: (req, res, next) => {
         if (!req.body.email)
-            return middleware.response(res, "", "Invalid email", 400);;
+            return response(res, "", "Invalid email", 400);;
 
         if (!req.body.password)
-            return middleware.response(res, "", "Invalid password", 400);;
+            return response(res, "", "Invalid password", 400);;
         next();
     },
     checkSignUpRequest: (req, res, next) => {
         if (!req.body.userName)
-            return middleware.responses(res, 400, "Invalid userName");
+            return response(res, 400, "Invalid userName");
         if (!req.body.password)
-            return middleware.responses(res, 400, "Invalid password");
+            return response(res, 400, "Invalid password");
         if (!req.body.email)
-            return middleware.responses(res, 400, "Invalid email");
+            return response(res, 400, "Invalid email");
         if (!req.body.phoneNumber)
-            return middleware.responses(res, 400, "Invalid phone number");
+            return response(res, 400, "Invalid phone number");
         if (!req.body.fullName)
-            return middleware.responses(res, 400, "Invalid fullname");
+            return response(res, 400, "Invalid fullname");
 
         next();
     },
@@ -44,7 +39,7 @@ export const middleware = {
         if (req.session.user && req.session.user.userId) {
             next();
         } else {
-            middleware.response(res, "", "Unauthorized access", 401);
+            response(res, "", "Unauthorized access", 401);
         }
     }
 }
