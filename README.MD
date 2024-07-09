@@ -1,0 +1,4 @@
+-Em sử dụng ORM: prisma
+-Chức năng xử lý: đăng ký - đăng nhập
+-Khi đăng nhập - lưu session - cho phép getUser
+-Chức năng JWT: tạo token khi đăng nhập thành công 
