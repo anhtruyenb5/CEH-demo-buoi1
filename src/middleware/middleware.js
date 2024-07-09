@@ -22,17 +22,12 @@ export const middleware = {
         next();
     },
     checkSignUpRequest: (req, res, next) => {
-        if (!req.body.userName)
-            return response(res, 400, "Invalid userName");
-        if (!req.body.password)
-            return response(res, 400, "Invalid password");
-        if (!req.body.email)
-            return response(res, 400, "Invalid email");
-        if (!req.body.phoneNumber)
-            return response(res, 400, "Invalid phone number");
         if (!req.body.fullName)
-            return response(res, 400, "Invalid fullname");
-
+            return response(res, "", "Invalid fullname", 400);;
+        if (!req.body.email)
+            return response(res, "", "Invalid email", 400);;
+        if (!req.body.password)
+            return response(res, "", "Invalid password", 400);;
         next();
     },
     checkSession: (req, res, next) => {
