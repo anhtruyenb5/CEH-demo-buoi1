@@ -3,4 +3,4 @@
 -Khi đăng nhập - lưu session - cho phép getUser
 -Chức năng JWT: tạo token khi đăng nhập thành công 
 -middleware: checkSignUpRequest - checkLoginRequest- checkSession - errorHandle
--Promise: xử dụng Promise để xử lý getUser
+-Promise: sử dụng Promise để xử lý getUser
